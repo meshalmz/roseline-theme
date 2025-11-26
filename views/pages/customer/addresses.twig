@@ -1,0 +1,48 @@
+{% extends "layouts/master.twig" %}
+{% block content %}
+<div class="container">
+    <h2 class="title" style="margin-top: 30px;">عناويني</h2>
+    {% if addresses|length == 0 %}
+        <div class="panel" style="margin-top:20px; text-align:center;">
+            <p>لا يوجد لديك عناوين مسجّلة بعد.</p>
+            <a href="/customer/addresses/add" class="btn btn-primary" style="margin-top:15px;">
+                إضافة عنوان جديد
+            </a>
+        </div>
+    {% else %}
+        <section class="section fade-up">
+            <div style="
+                display:grid;
+                grid-template-columns:repeat(auto-fill, minmax(280px, 1fr));
+                gap:20px;
+            ">
+                {% for address in addresses %}
+                    <div class="panel" style="padding:20px;">
+                        <h3 style="color:var(--rose-dark); margin-bottom:10px;">
+                            {{ address.name }}
+                        </h3>
+                        <p>{{ address.phone }}</p>
+                        <p>{{ address.city }}, {{ address.country }}</p>
+                        <p>{{ address.address }}</p>
+                        <div style="display:flex; gap:10px; margin-top:18px;">
+                            <a href="/customer/addresses/edit/{{ address.id }}"
+                               class="btn btn-outline-gold" style="flex:1; text-align:center;">
+                                تعديل
+                            </a>
+                            <a href="/customer/addresses/delete/{{ address.id }}"
+                               class="btn btn-primary" style="flex:1; text-align:center; background:var(--rose-dark);">
+                                حذف
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            <div style="text-align:center; margin-top:30px;">
+                <a href="/customer/addresses/add" class="btn btn-primary">
+                    + إضافة عنوان جديد
+                </a>
+            </div>
+        </section>
+    {% endif %}
+</div>
+{% endblock %}

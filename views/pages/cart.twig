@@ -1,0 +1,71 @@
+{% extends "layouts/master.twig" %}
+{% block content %}
+<div class="container">
+    <h2 class="title" style="margin-top: 30px;">سلة المشتريات</h2>
+    {% if cart.items|length == 0 %}
+        <div class="panel" style="margin-top:20px; text-align:center;">
+            <p>سلة التسوق فارغة حالياً.</p>
+            <a class="btn btn-primary" href="/products">تسوّق الآن</a>
+        </div>
+    {% else %}
+        <div class="panel" style="margin-top:20px;">
+            <table style="width:100%; border-collapse:collapse;">
+                <thead>
+                    <tr style="border-bottom:1px solid rgba(201,161,95,0.2);">
+                        <th style="padding:10px; text-align:right;">المنتج</th>
+                        <th style="padding:10px;">الكمية</th>
+                        <th style="padding:10px;">السعر</th>
+                        <th style="padding:10px;">إزالة</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in cart.items %}
+                        <tr style="border-bottom:1px solid rgba(201,161,95,0.08);">
+                            <td style="padding:12px;">
+                                <a href="{{ item.product.url }}" style="color:var(--text-strong); text-decoration:none;">
+                                    {{ item.product.name }}
+                                </a>
+                            </td>
+                            <td style="padding:12px; text-align:center;">
+                                <form action="/cart/update/{{ item.id }}" method="post">
+                                    <input
+                                        type="number"
+                                        name="quantity"
+                                        value="{{ item.quantity }}"
+                                        min="1"
+                                        style="
+                                            width:60px;
+                                            padding:6px;
+                                            border-radius:10px;
+                                            text-align:center;
+                                            border:1px solid rgba(201,161,95,0.3);
+                                        ">
+                                </form>
+                            </td>
+                            <td style="padding:12px; text-align:center; color:var(--rose-dark); font-weight:700;">
+                                {{ item.total|number_format }} {{ store.currency }}
+                            </td>
+                            <td style="padding:12px; text-align:center;">
+                                <a
+                                    href="/cart/remove/{{ item.id }}"
+                                    style="color:var(--gold-deep); font-weight:bold;">
+                                    ✕
+                                </a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        <div class="panel" style="margin-top:20px;">
+            <h3 style="margin-bottom:10px; color:var(--rose-dark);">الإجمالي</h3>
+            <p style="font-size:18px; margin-bottom:20px;">
+                {{ cart.total|number_format }} {{ store.currency }}
+            </p>
+            <a href="/checkout" class="btn btn-primary" style="width:100%; text-align:center;">
+                إتمام الطلب
+            </a>
+        </div>
+    {% endif %}
+</div>
+{% endblock %}

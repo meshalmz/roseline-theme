@@ -1,0 +1,26 @@
+{
+  "name": "roseline-theme",
+  "display_name": "Roseline â€“ Pink Luxury Theme",
+  "version": "1.0.0",
+  "description": "Premium luxury pink fashion theme for Salla stores. Elegant, modern, fast, and responsive.",
+  "author": {
+    "name": "meshalmz",
+    "email": "support@example.com"
+  },
+  "type": "theme",
+  "salla_version": ">=3.0.0",
+  "preview_url": "/",
+  "paths": {
+    "assets": "assets",
+    "views": "views",
+    "locales": "locales"
+  },
+  "entries": {
+    "styles": [
+      "assets/styles/main.css"
+    ],
+    "scripts": [
+      "assets/js/main.js"
+    ]
+  }
+}

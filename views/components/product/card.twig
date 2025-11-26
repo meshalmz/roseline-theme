@@ -1,0 +1,29 @@
+<div class="card fade-up">
+    <a href="{{ product.url }}" class="img-wrap">
+        <img src="{{ product.image }}" alt="{{ product.name }}">
+    </a>
+    <div class="meta">
+        <a href="{{ product.url }}" class="title">
+            {{ product.name }}
+        </a>
+        <div class="price">
+            {{ product.price|number_format }} {{ store.currency }}
+        </div>
+    </div>
+    <div class="actions">
+        {% if product.can_add_to_cart %}
+            <form action="/cart/add/{{ product.id }}" method="post">
+                <button class="btn btn-add" type="submit">
+                    إضافة للسلة
+                </button>
+            </form>
+        {% else %}
+            <button class="btn btn-add" disabled style="opacity:0.55;">
+                غير متوفر
+            </button>
+        {% endif %}
+        <a href="/wishlist/add/{{ product.id }}" class="btn btn-wish" aria-label="إضافة للمفضلة">
+            ❤
+        </a>
+    </div>
+</div>

@@ -1,0 +1,50 @@
+{% extends "layouts/master.twig" %}
+{% block content %}
+<div class="container">
+    <section class="section fade-up">
+        <div class="panel" style="padding:30px;">
+            {% if brand.image %}
+                <div style="text-align:center; margin-bottom:25px;">
+                    <img src="{{ brand.image }}"
+                         alt="{{ brand.name }}"
+                         style="width:160px; height:160px; object-fit:contain;">
+                </div>
+            {% endif %}
+            <h1 style="
+                text-align:center;
+                color:var(--rose-dark);
+                margin-bottom:15px;
+            ">
+                {{ brand.name }}
+            </h1>
+            {% if brand.description %}
+                <div style="
+                    font-size:17px;
+                    color:var(--text);
+                    line-height:1.8;
+                    text-align:center;
+                    margin-bottom:25px;
+                ">
+                    {{ brand.description|raw }}
+                </div>
+            {% endif %}
+        </div>
+    </section>
+    <section class="section fade-up">
+        <h2 class="title" style="margin-bottom:20px;">
+            منتجات {{ brand.name }}
+        </h2>
+        {% if brand.products|length == 0 %}
+            <div class="panel" style="text-align:center;">
+                <p>لا توجد منتجات لهذه العلامة حالياً.</p>
+            </div>
+        {% else %}
+            <div class="products-grid">
+                {% for product in brand.products %}
+                    {% include "components/product/card.twig" with { product: product } %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    </section>
+</div>
+{% endblock %}

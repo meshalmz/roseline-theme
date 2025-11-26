@@ -1,0 +1,20 @@
+{% extends "layouts/master.twig" %}
+{% block content %}
+<div class="container">
+    <h2 class="title" style="margin-top: 30px;">المفضلة</h2>
+    {% if wishlist.items|length == 0 %}
+        <div class="panel" style="margin-top:20px; text-align:center;">
+            <p>قائمة المفضلة فارغة حالياً.</p>
+            <a class="btn btn-primary" href="/products">ابدأ التسوق</a>
+        </div>
+    {% else %}
+        <section class="section fade-up">
+            <div class="products-grid">
+                {% for item in wishlist.items %}
+                    {% include "components/product/card.twig" with { product: item.product } %}
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+</div>
+{% endblock %}

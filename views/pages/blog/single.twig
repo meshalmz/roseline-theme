@@ -1,0 +1,60 @@
+{% extends "layouts/master.twig" %}
+{% block content %}
+<div class="container">
+    <section class="section fade-up">
+        <div class="panel" style="padding:0; overflow:hidden; border-radius:24px;">
+            {% if post.image %}
+                <img src="{{ post.image }}"
+                     alt="{{ post.title }}"
+                     style="width:100%; height:350px; object-fit:cover;">
+            {% endif %}
+            <div style="padding:30px;">
+                <h1 style="color:var(--rose-dark); font-size:28px; margin-bottom:15px;">
+                    {{ post.title }}
+                </h1>
+                <div style="color:#777; font-size:14px; margin-bottom:20px;">
+                    نشر في {{ post.created_at|date("Y-m-d") }}
+                </div>
+                <div class="page-content" style="
+                    font-size:18px;
+                    line-height:1.85;
+                    color:var(--text);
+                ">
+                    {{ post.content|raw }}
+                </div>
+            </div>
+        </div>
+    </section>
+    {% if related_posts|length > 0 %}
+        <section class="section fade-up">
+            <h2 class="title" style="margin-bottom:20px;">
+                مقالات مشابهة
+            </h2>
+            <div style="
+                display:grid;
+                grid-template-columns:repeat(auto-fill, minmax(260px, 1fr));
+                gap:22px;
+            ">
+                {% for rp in related_posts %}
+                    <div class="panel" style="padding:0; border-radius:22px; overflow:hidden;">
+                        <a href="/blog/{{ rp.slug }}">
+                            <img src="{{ rp.image }}"
+                                 alt="{{ rp.title }}"
+                                 style="width:100%; height:180px; object-fit:cover;">
+                        </a>
+                        <div style="padding:18px;">
+                            <a href="/blog/{{ rp.slug }}"
+                               style="font-size:17px; font-weight:700; color:var(--rose-dark); text-decoration:none;">
+                                {{ rp.title }}
+                            </a>
+                            <p style="color:#777; font-size:13px; margin-top:6px;">
+                                {{ rp.created_at|date("Y-m-d") }}
+                            </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+</div>
+{% endblock %}

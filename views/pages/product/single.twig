@@ -1,0 +1,93 @@
+{% extends "layouts/master.twig" %}
+{% block content %}
+<div class="container">
+    <div class="product-single fade-up">
+        <div class="product-gallery">
+            <img class="main-img" src="{{ product.image }}" alt="{{ product.name }}">
+            {% if product.images|length > 1 %}
+                <div class="thumbs" style="display:flex; gap:10px; margin: 12px 0; overflow-x:auto;">
+                    {% for img in product.images %}
+                        <img
+                            src="{{ img }}"
+                            alt="{{ product.name }}"
+                            style="
+                                width:70px;
+                                height:70px;
+                                object-fit:cover;
+                                border-radius:10px;
+                                cursor:pointer;
+                                border:1px solid rgba(201,161,95,0.15);"
+                            onclick="document.querySelector('.main-img').src='{{ img }}'">
+                    {% endfor %}
+                </div>
+            {% endif %}
+        </div>
+        <div class="product-info">
+            <h2>{{ product.name }}</h2>
+            <div class="price">
+                {{ product.price|number_format }} {{ store.currency }}
+            </div>
+            {% if product.description %}
+                <div class="desc">
+                    {{ product.description|raw }}
+                </div>
+            {% endif %}
+            {% if product.options %}
+                <div class="options" style="margin-bottom:16px;">
+                    {% for option in product.options %}
+                        <div class="option-block" style="margin-bottom:10px;">
+                            <strong>{{ option.name }}:</strong>
+                            <div style="margin-top:6px; display:flex; gap:8px; flex-wrap:wrap;">
+                                {% for value in option.values %}
+                                    <label style="
+                                        padding:8px 14px;
+                                        border-radius:10px;
+                                        background:#FAF4F6;
+                                        border:1px solid rgba(201,161,95,0.2);
+                                        cursor:pointer;
+                                    ">
+                                        <input
+                                            type="radio"
+                                            name="option_{{ option.id }}"
+                                            value="{{ value.id }}"
+                                            style="display:none;">
+                                        {{ value.name }}
+                                    </label>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+            <div class="purchase-actions">
+                {% if product.can_add_to_cart %}
+                    <form action="/cart/add/{{ product.id }}" method="post">
+                        <button class="btn btn-primary" type="submit">
+                            أضف إلى السلة
+                        </button>
+                    </form>
+                {% else %}
+                    <button class="btn btn-primary" disabled style="opacity:0.6;">
+                        غير متوفر حالياً
+                    </button>
+                {% endif %}
+                <a href="/wishlist/add/{{ product.id }}" class="btn btn-outline-gold" style="white-space:nowrap;">
+                    ♥ مفضلة
+                </a>
+            </div>
+        </div>
+    </div>
+    <section class="section fade-up">
+        <h2 class="title">منتجات مشابهة</h2>
+        <div class="panel">
+            <div class="products-grid">
+                {% for related in product.related %}
+                    {% include "components/product/card.twig" with { product: related } %}
+                {% else %}
+                    <p>لا يوجد منتجات مشابهة حالياً.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </section>
+</div>
+{% endblock %}

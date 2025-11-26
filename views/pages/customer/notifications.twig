@@ -1,0 +1,46 @@
+{% extends "layouts/master.twig" %}
+{% block content %}
+<div class="container">
+    <h2 class="title" style="margin-top: 30px;">الإشعارات</h2>
+    {% if notifications|length == 0 %}
+        <div class="panel" style="margin-top:20px; text-align:center;">
+            <p>لا توجد إشعارات جديدة حالياً.</p>
+            <a href="/" class="btn btn-primary">العودة للرئيسية</a>
+        </div>
+    {% else %}
+        <section class="section fade-up">
+            <div class="panel" style="padding:0;">
+                {% for n in notifications %}
+                    <div style="
+                        padding:20px;
+                        border-bottom:1px solid rgba(201,161,95,0.15);
+                        display:flex;
+                        justify-content:space-between;
+                        align-items:center;
+                        gap:15px;
+                    ">
+                        <div style="flex:1;">
+                            <div style="font-size:17px; font-weight:700; color:var(--rose-dark); margin-bottom:6px;">
+                                {{ n.title }}
+                            </div>
+                            <div style="color:var(--text-strong); line-height:1.6;">
+                                {{ n.message }}
+                            </div>
+                            <div style="margin-top:8px; font-size:14px; color:#777;">
+                                {{ n.created_at|date("Y-m-d H:i") }}
+                            </div>
+                        </div>
+                        <div>
+                            {% if n.url %}
+                                <a href="{{ n.url }}" class="btn btn-outline-gold" style="white-space:nowrap;">
+                                    عرض
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+</div>
+{% endblock %}

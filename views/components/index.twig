@@ -1,0 +1,67 @@
+{% extends "layouts/master.twig" %}
+{% block content %}
+<section class="hero fade-up">
+    <div class="hero-panel">
+        <h1>اكتشفي الأناقة بتفاصيل وردية فاخرة</h1>
+        <p class="lead">
+            مجموعة مختارة من الأزياء الراقية — تصميم فخم، لمسات ذهبية، وإحساس مميز لكل امرأة.
+        </p>
+        <a href="/products" class="btn btn-primary">
+            تسوّقي الآن
+        </a>
+    </div>
+</section>
+<section class="section fade-up in-view">
+    <div class="container">
+        <h2 class="title">منتجات مميزة</h2>
+        <div class="panel">
+            <div class="products-grid">
+                {% for product in products.featured %}
+                    {% include "components/product/card.twig" with { product: product } %}
+                {% else %}
+                    <p>لا يوجد منتجات مميزة حالياً.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section fade-up">
+    <div class="container">
+        <h2 class="title">وصل حديثاً</h2>
+        <div class="panel">
+            <div class="products-grid">
+                {% for product in products.new %}
+                    {% include "components/product/card.twig" with { product: product } %}
+                {% else %}
+                    <p>لا يوجد منتجات جديدة حالياً.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section fade-up">
+    <div class="container">
+        <h2 class="title">الأكثر مبيعاً</h2>
+        <div class="panel">
+            <div class="products-grid">
+                {% for product in products.best_sellers %}
+                    {% include "components/product/card.twig" with { product: product } %}
+                {% else %}
+                    <p>لا يوجد منتجات الأكثر مبيعاً حالياً.</p>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section fade-up">
+    <div class="container">
+        <div class="hero-panel" style="padding:40px; margin-top:40px;">
+            <h2>تشكيلة فاخرة بلمسات ذهبية</h2>
+            <p class="lead">تصاميم استثنائية — تنسيق مثالي — جودة عالية.</p>
+            <a href="/categories" class="btn btn-outline-gold">
+                استكشفي المجموعات
+            </a>
+        </div>
+    </div>
+</section>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends "layouts/master.twig" %}
+{% block content %}
+<div class="container">
+    <section class="section fade-up">
+        <div class="panel" style="text-align:center; padding:40px;">
+            <h2 style="color:var(--rose-dark); margin-bottom:10px;">
+                Ø´ÙƒØ±Ù‹Ø§ Ù„Ø·Ù„Ø¨Ùƒ ğŸ’—
+            </h2>
+            <p class="lead" style="margin-bottom:25px;">
+                ØªÙ… Ø§Ø³ØªÙ„Ø§Ù… Ø·Ù„Ø¨Ùƒ Ø¨Ù†Ø¬Ø§Ø­ØŒ ÙˆØ³ÙŠØªÙ… ØªØ¬Ù‡ÙŠØ² Ø§Ù„Ø´Ø­Ù†Ø© ÙÙŠ Ø£Ù‚Ø±Ø¨ ÙˆÙ‚Øª Ù…Ù…ÙƒÙ†.
+            </p>
+            {% if order.id %}
+                <div style="
+                    background:#FAF4F6;
+                    border:1px solid rgba(201,161,95,0.25);
+                    padding:14px 20px;
+                    border-radius:16px;
+                    font-size:18px;
+                    margin-bottom:30px;
+                    display:inline-block;
+                ">
+                    Ø±Ù‚Ù… Ø§Ù„Ø·Ù„Ø¨: <strong>{{ order.id }}</strong>
+                </div>
+            {% endif %}
+            <a href="/" class="btn btn-primary" style="margin-top:10px;">
+                Ø§Ù„Ø¹ÙˆØ¯Ø© Ù„Ù„ØµÙØ­Ø© Ø§Ù„Ø±Ø¦ÙŠØ³ÙŠØ©
+            </a>
+        </div>
+    </section>
+</div>
+{% endblock %}

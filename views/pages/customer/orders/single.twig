@@ -1,0 +1,99 @@
+{% extends "layouts/master.twig" %}
+{% block content %}
+<div class="container">
+    {% if not order %}
+        <div class="panel" style="margin-top:40px; text-align:center;">
+            <p>عذراً، لا يمكن العثور على هذا الطلب.</p>
+            <a href="/customer/orders" class="btn btn-primary">رجوع</a>
+        </div>
+    {% else %}
+        <h2 class="title" style="margin-top: 30px;">تفاصيل الطلب</h2>
+        <section class="section fade-up">
+            <div class="panel">
+                <h3 style="margin-bottom: 6px;">
+                    رقم الطلب: <strong>#{{ order.id }}</strong>
+                </h3>
+                <p style="color: var(--text-strong); margin-bottom: 15px;">
+                    تاريخ الطلب: {{ order.created_at|date("Y-m-d") }}
+                </p>
+                <div class="order-status" style="
+                    background: var(--rose-light);
+                    border: 1px solid rgba(201,161,95,0.22);
+                    padding: 12px 18px;
+                    border-radius: 14px;
+                    font-weight: 700;
+                    display: inline-block;
+                    color: var(--rose-dark);
+                    margin-bottom: 25px;
+                ">
+                    حالة الطلب: {{ order.status }}
+                </div>
+                <h3 style="color: var(--rose-dark); margin-top:20px;">المنتجات</h3>
+                <table style="width:100%; border-collapse:collapse; margin-top:15px;">
+                    <thead>
+                        <tr style="background:var(--rose-light); border-bottom:1px solid rgba(201,161,95,0.25);">
+                            <th style="padding:12px;">الصورة</th>
+                            <th style="padding:12px;">المنتج</th>
+                            <th style="padding:12px;">الكمية</th>
+                            <th style="padding:12px;">السعر</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for item in order.items %}
+                            <tr style="border-bottom:1px solid rgba(201,161,95,0.15);">
+                                <td style="padding:12px; text-align:center;">
+                                    <img src="{{ item.product.image }}"
+                                         alt="{{ item.product.name }}"
+                                         style="width:60px; height:60px; border-radius:10px; object-fit:cover;">
+                                </td>
+                                <td style="padding:12px;">
+                                    {{ item.product.name }}
+                                </td>
+                                <td style="padding:12px; text-align:center;">
+                                    {{ item.quantity }}
+                                </td>
+                                <td style="padding:12px; text-align:center;">
+                                    {{ item.total|number_format }} {{ store.currency }}
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                <h3 style="color: var(--rose-dark); margin:30px 0 12px;">ملخص الطلب</h3>
+                <div style="display:flex; flex-direction:column; gap:8px; font-size:17px;">
+                    <div>
+                        <strong>المجموع:</strong>
+                        {{ order.subtotal|number_format }} {{ store.currency }}
+                    </div>
+                    <div>
+                        <strong>الشحن:</strong>
+                        {{ order.shipping|number_format }} {{ store.currency }}
+                    </div>
+                    <div>
+                        <strong>الإجمالي النهائي:</strong>
+                        {{ order.total|number_format }} {{ store.currency }}
+                    </div>
+                </div>
+                <hr class="separator" style="margin:24px 0;" />
+                {% if order.shipping_address %}
+                    <h3 style="color: var(--rose-dark); margin-bottom:12px;">عنوان الشحن</h3>
+                    <div style="font-size:16px;">
+                        <p>{{ order.shipping_address.name }}</p>
+                        <p>{{ order.shipping_address.phone }}</p>
+                        <p>{{ order.shipping_address.city }}, {{ order.shipping_address.country }}</p>
+                        <p>{{ order.shipping_address.address }}</p>
+                    </div>
+                    <hr class="separator" style="margin:24px 0;" />
+                {% endif %}
+                <h3 style="color: var(--rose-dark); margin-bottom:12px;">طريقة الدفع</h3>
+                <p style="font-size:17px;">
+                    {{ order.payment_method }}
+                </p>
+                <a href="/customer/orders" class="btn btn-outline-gold" style="margin-top:30px;">
+                    رجوع إلى طلباتي
+                </a>
+            </div>
+        </section>
+    {% endif %}
+</div>
+{% endblock %}

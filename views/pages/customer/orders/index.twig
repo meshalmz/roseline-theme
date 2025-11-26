@@ -1,0 +1,51 @@
+{% extends "layouts/master.twig" %}
+{% block content %}
+<div class="container">
+    <h2 class="title" style="margin-top: 30px;">طلباتي</h2>
+    {% if orders|length == 0 %}
+        <div class="panel" style="margin-top:20px; text-align:center;">
+            <p>لا يوجد أي طلبات حتى الآن.</p>
+            <a class="btn btn-primary" href="/products">ابدأ التسوق</a>
+        </div>
+    {% else %}
+        <section class="section fade-up">
+            <div class="panel" style="padding:0; overflow:hidden;">
+                <table style="width:100%; border-collapse:collapse;">
+                    <thead>
+                        <tr style="background:var(--rose-light); border-bottom:1px solid rgba(201,161,95,0.25);">
+                            <th style="padding:12px;">رقم الطلب</th>
+                            <th style="padding:12px;">التاريخ</th>
+                            <th style="padding:12px;">الحالة</th>
+                            <th style="padding:12px;">الإجمالي</th>
+                            <th style="padding:12px;">عرض</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for order in orders %}
+                            <tr style="border-bottom:1px solid rgba(201,161,95,0.1);">
+                                <td style="padding:14px; text-align:center;">
+                                    #{{ order.id }}
+                                </td>
+                                <td style="padding:14px; text-align:center;">
+                                    {{ order.created_at|date("Y-m-d") }}
+                                </td>
+                                <td style="padding:14px; text-align:center; color:var(--rose-dark); font-weight:700;">
+                                    {{ order.status }}
+                                </td>
+                                <td style="padding:14px; text-align:center;">
+                                    {{ order.total|number_format }} {{ store.currency }}
+                                </td>
+                                <td style="padding:14px; text-align:center;">
+                                    <a href="/customer/orders/{{ order.id }}" class="btn btn-outline-gold" style="padding:6px 14px;">
+                                        تفاصيل
+                                    </a>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    {% endif %}
+</div>
+{% endblock %}

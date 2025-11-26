@@ -1,0 +1,51 @@
+{% extends "layouts/master.twig" %}
+{% block content %}
+<div class="container">
+    <section class="hero fade-up">
+        <div class="hero-panel">
+            <h1>لمسة فاخرة تكمّل أناقتك</h1>
+            <p class="lead">
+                اكتشفي أجمل تصاميم الأزياء المختارة بعناية، مع أجواء وردية فاخرة ولمسات ذهبية راقية.
+            </p>
+            <a class="btn btn-primary" href="/products">تسوّقي الآن</a>
+        </div>
+    </section>
+    <section class="section fade-up">
+        <h2 class="title">المجموعات المميزة</h2>
+        <div style="
+            display:grid;
+            grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+            gap:20px;
+        ">
+            <a href="/products?sort=new" class="panel" style="padding:0; overflow:hidden;">
+                <img src="/uploads/collections/new.jpg" style="height:180px; width:100%; object-fit:cover;">
+                <div style="padding:18px; text-align:center; font-weight:700; color:var(--rose-dark);">
+                    وصل حديثاً
+                </div>
+            </a>
+            <a href="/products?sort=best" class="panel" style="padding:0; overflow:hidden;">
+                <img src="/uploads/collections/best.jpg" style="height:180px; width:100%; object-fit:cover;">
+                <div style="padding:18px; text-align:center; font-weight:700; color:var(--rose-dark);">
+                    الأكثر مبيعاً
+                </div>
+            </a>
+            <a href="/products?collection=elegant" class="panel" style="padding:0; overflow:hidden;">
+                <img src="/uploads/collections/elegant.jpg" style="height:180px; width:100%; object-fit:cover;">
+                <div style="padding:18px; text-align:center; font-weight:700; color:var(--rose-dark);">
+                    مجموعة السهرة
+                </div>
+            </a>
+        </div>
+    </section>
+    {% if products|length > 0 %}
+        <section class="section fade-up">
+            <h2 class="title">منتجات مختارة</h2>
+            <div class="products-grid">
+                {% for product in products %}
+                    {% include "components/product/card.twig" with { product: product } %}
+                {% endfor %}
+            </div>
+        </section>
+    {% endif %}
+</div>
+{% endblock %}
